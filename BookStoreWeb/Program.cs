@@ -1,4 +1,7 @@
 using BookStore.DataAccess.Data;
+using BookStore.DataAccess.Repository;
+using BookStore.DataAccess.Repository.IRepository;
+using BookStore.Models.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 var app = builder.Build();
