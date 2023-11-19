@@ -3,8 +3,9 @@ using BookStore.DataAccess.Repository.IRepository;
 using BookStore.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookStoreWeb.Controllers
+namespace BookStoreWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -42,7 +43,7 @@ namespace BookStoreWeb.Controllers
                 return NotFound();
             }
             Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
-            if ( (categoryFromDb is null))
+            if (categoryFromDb is null)
             {
                 return NotFound();
             }
@@ -68,7 +69,7 @@ namespace BookStoreWeb.Controllers
                 return NotFound();
             }
             Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
-            if ((categoryFromDb is null))
+            if (categoryFromDb is null)
             {
                 return NotFound();
             }
