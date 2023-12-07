@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace BookStore.Models.Models
+namespace BookStore.Models
 {
     public class Product
     {
@@ -15,6 +16,7 @@ namespace BookStore.Models.Models
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
+
         public string Description { get; set; }
         [Required]
         public string ISBN { get; set; }
@@ -40,9 +42,14 @@ namespace BookStore.Models.Models
         [Range(1, 1000)]
         public double Price100 { get; set; }
 
+        [Display(Name = "Category Id")]
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
+        [ValidateNever]
         public Category Category { get; set; }
+
+        [Display(Name = "Image Url")]
+        [ValidateNever]
         public string ImageUrl { get; set; }
     }
 }

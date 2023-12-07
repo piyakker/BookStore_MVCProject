@@ -1,7 +1,7 @@
 using BookStore.DataAccess.Data;
 using BookStore.DataAccess.Repository;
 using BookStore.DataAccess.Repository.IRepository;
-using BookStore.Models.Models;
+using BookStore.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
