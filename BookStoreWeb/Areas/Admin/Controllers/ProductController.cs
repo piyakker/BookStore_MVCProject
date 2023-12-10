@@ -2,12 +2,15 @@
 using BookStore.DataAccess.Repository.IRepository;
 using BookStore.Models;
 using BookStore.Models.ViewModels;
+using BookStore.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace BookStoreWeb.Areas.Admin.Controllers
 {
+    [Authorize(Roles = StaticDetail.Role_Admin)]
     [Area("Admin")]
     public class ProductController : Controller
     {
