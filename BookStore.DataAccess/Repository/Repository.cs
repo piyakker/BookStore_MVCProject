@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BookStore.DataAccess.Data;
 using BookStore.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BookStore.DataAccess.Repository
 {
@@ -24,9 +25,15 @@ namespace BookStore.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+
+            if (tracked)
+                query = dbSet;
+            else
+                query = dbSet.AsNoTracking();
+
             query = query.Where(filter);
 
             if (!string.IsNullOrEmpty(includeProperties))
@@ -37,13 +44,14 @@ namespace BookStore.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
-
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (filter is not null)
+                query = query.Where(filter);
 
             if (!string.IsNullOrEmpty(includeProperties))
             {
